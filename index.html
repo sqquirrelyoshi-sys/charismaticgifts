@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 9 Charismatic Gifts — A Prayer Starter</title>
+<style>
+  :root{
+    --bg:#faf6ee; --ink:#2a2420; --muted:#6b5f52; --line:#e4d9c6;
+    --gold:#b08123; --gold-soft:#f3e7c9; --blue:#2f3d5c; --blue-soft:#e7ebf3;
+    --card:#fffdf8; --green:#3f6b47; --shadow:0 2px 14px rgba(60,45,20,.08);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:620px;margin:0 auto;padding:0 18px}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:1.7rem;line-height:1.2;margin:.4em 0 .1em}
+  h2{font-family:Georgia,serif;font-size:1.25rem;color:var(--blue);margin:1.4em 0 .5em}
+  .sub{color:var(--muted);font-size:.95rem;margin-top:0}
+  header{text-align:center;padding:26px 0 6px;border-bottom:1px solid var(--line)}
+  .cross{color:var(--gold);font-size:1.4rem;letter-spacing:.3em}
+
+  /* Guardrail */
+  .guard{
+    background:var(--blue);color:#fdf8ec;border-radius:14px;
+    padding:18px 18px 16px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  .guard h3{margin:0 0 8px;font-family:Georgia,serif;font-size:1.05rem;color:#f3d78a;display:flex;align-items:center;gap:8px}
+  .guard p{margin:.5em 0;font-size:.92rem;color:#e8e0d0}
+  .guard .key{color:#f3d78a;font-weight:600}
+  .guard ul{margin:.4em 0 0;padding-left:20px;font-size:.9rem;color:#e0d8c8}
+  .guard li{margin:.3em 0}
+
+  /* Steps / progress */
+  .step{display:none}
+  .step.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0 4px}
+  .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s ease}
+  .count{font-size:.82rem;color:var(--muted);text-align:right}
+
+  /* Mission chips */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+  .chip{
+    flex:1 1 44%;min-width:130px;border:1.5px solid var(--line);background:var(--card);
+    border-radius:12px;padding:14px 12px;text-align:center;cursor:pointer;font-weight:600;
+    transition:.15s;user-select:none;
+  }
+  .chip small{display:block;font-weight:400;color:var(--muted);font-size:.78rem;margin-top:3px}
+  .chip.on{border-color:var(--gold);background:var(--gold-soft);color:#7a5813}
+
+  /* Question card */
+  .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;box-shadow:var(--shadow)}
+  .q .scene{font-size:1.12rem;line-height:1.5;margin:0 0 4px}
+  .q .tag{font-size:.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-bottom:12px}
+  .opts{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+  .opt{
+    border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:13px 16px;
+    cursor:pointer;font-size:1rem;font-weight:500;transition:.12s;
+  }
+  .opt:active{transform:scale(.985)}
+  .opt.on{border-color:var(--blue);background:var(--blue-soft)}
+
+  .nav{display:flex;gap:10px;margin-top:18px}
+  button.btn{
+    flex:1;border:none;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:.15s;
+  }
+  .btn.primary{background:var(--gold);color:#fff}
+  .btn.primary:disabled{background:#d8cbb0;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);flex:0 0 90px}
+
+  /* Results */
+  .cols{display:flex;gap:14px;margin:16px 0}
+  .col{flex:1;min-width:0}
+  .col h3{font-family:Georgia,serif;font-size:1rem;margin:0 0 4px;line-height:1.2}
+  .col .lede{font-size:.78rem;color:var(--muted);margin:0 0 12px;min-height:2.4em}
+  .col.given h3{color:var(--green)}
+  .col.invite h3{color:var(--gold)}
+  .rank{list-style:none;margin:0;padding:0;counter-reset:r}
+  .rank li{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:10px 12px;margin-bottom:8px;position:relative;
+  }
+  .rank li .nm{font-weight:600;font-size:.92rem;display:block}
+  .rank li .meter{height:5px;background:var(--line);border-radius:5px;margin-top:6px;overflow:hidden}
+  .rank li .meter > i{display:block;height:100%}
+  .given .meter > i{background:var(--green)}
+  .invite .meter > i{background:var(--gold)}
+  .rank li.top{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold-soft)}
+
+  /* Doctrine accordion */
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+  details summary{padding:14px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;font-family:Georgia,serif}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"＋";color:var(--gold);font-weight:400;font-size:1.2rem}
+  details[open] summary::after{content:"－"}
+  .doc{padding:0 16px 16px;font-size:.9rem}
+  .doc .def{margin:.2em 0 .8em}
+  .doc .row{display:flex;gap:8px;margin:.5em 0;align-items:baseline}
+  .doc .row b{flex:0 0 62px;color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+  .doc .row span{flex:1;color:var(--ink)}
+  .doc .row.verse span{font-style:italic;color:var(--muted)}
+
+  .pray{background:var(--blue-soft);border-left:4px solid var(--blue);border-radius:10px;padding:16px;margin:22px 0;font-size:.95rem}
+  .pray b{color:var(--blue)}
+  .footnote{font-size:.78rem;color:var(--muted);text-align:center;margin:30px 0 0;line-height:1.6}
+  .restart{display:block;margin:18px auto 0;background:none;border:none;color:var(--gold);font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="cross">✝</div>
+  <h1>The Nine Charismatic Gifts</h1>
+  <p class="sub">A prayer starter, not a verdict &nbsp;·&nbsp; 1 Corinthians 12:8–10</p>
+</header>
+
+<!-- GUARDRAIL: always visible -->
+<div class="guard">
+  <h3>✋ Read this first</h3>
+  <p>This is a <span class="key">conversation starter for prayer</span> — not a test, and not discernment. No quiz can tell you your gifts.</p>
+  <p>Two questions matter more than any score here:</p>
+  <ul>
+    <li><span class="key">What has God already given me?</span></li>
+    <li><span class="key">What is God desiring to give me?</span></li>
+  </ul>
+  <p style="margin-bottom:0"><b class="key">There is no substitute for prayer.</b> Real gifts are confirmed in the Church, tested by their fruit, and grown in deeper prayer and discernment — never self-declared. Bring your results to God, and to those who guide your formation.</p>
+</div>
+
+<!-- STEP 1: MISSIONS -->
+<section class="step active" id="s-mission">
+  <h2>1 · Where is your life right now?</h2>
+  <p class="sub">Tap the areas where you're carrying the most. This shapes what the Spirit may be inviting — it doesn't score you.</p>
+  <div class="chips" id="missionChips"></div>
+  <div class="nav">
+    <button class="btn primary" id="mNext">Begin the questions →</button>
+  </div>
+</section>
+
+<!-- STEP 2: QUESTIONS -->
+<section class="step" id="s-quiz">
+  <div class="bar"><i id="prog"></i></div>
+  <div class="count" id="count"></div>
+  <div class="q">
+    <div class="tag" id="qTag"></div>
+    <p class="scene" id="qScene"></p>
+    <div class="opts" id="qOpts"></div>
+  </div>
+  <div class="nav">
+    <button class="btn ghost" id="qBack">Back</button>
+    <button class="btn primary" id="qNext" disabled>Next →</button>
+  </div>
+</section>
+
+<!-- STEP 3: RESULTS -->
+<section class="step" id="s-result">
+  <h2>Two columns, one prayer</h2>
+  <p class="sub">Ordered gently, high to low. These are <b>doors to explore</b>, not labels to wear.</p>
+
+  <div class="cols">
+    <div class="col given">
+      <h3>Already given?</h3>
+      <p class="lede">Where you may already be recognizing the Spirit at work in your experience.</p>
+      <ol class="rank" id="rankGiven"></ol>
+    </div>
+    <div class="col invite">
+      <h3>Inviting you?</h3>
+      <p class="lede">Where your mission and desire suggest God may be drawing you to grow.</p>
+      <ol class="rank" id="rankInvite"></ol>
+    </div>
+  </div>
+
+  <div class="pray">
+    <b>Now the real work.</b> Take the top gift in each column into 10 minutes of silent prayer this week. Ask the Lord plainly: <i>“Is this from You? What are You asking of me?”</i> Notice the fruit — does it build up love, or self? Bring it to a mentor, spiritual director, or your service team before acting on it.
+  </div>
+
+  <h2>The gifts, defined</h2>
+  <p class="sub">Tap any gift for its meaning, Scripture, Catechism, and a saint who lived it.</p>
+  <div id="doctrine"></div>
+
+  <p class="footnote">
+    Sources: 1 Cor 12:8–10; Catechism of the Catholic Church §§799–801, 951, 2003;
+    1 Thess 5:19–21. &nbsp;A charism is given <i>“for the common good”</i> (1 Cor 12:7),
+    always subject to the Church's discernment.
+  </p>
+  <button class="restart" onclick="restart()">↺ Start over</button>
+</section>
+
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const MISSIONS = [
+  {id:"family",  label:"Family & relationships", note:"marriage, kids, parents, friends", gifts:{wisdom:2,healing:2,discern:1,prophecy:1}},
+  {id:"growth",  label:"Personal growth",        note:"virtue, habits, healing wounds",  gifts:{discern:2,faith:2,knowledge:1,healing:1}},
+  {id:"studies", label:"Studies & work",          note:"school, career, calling",         gifts:{wisdom:2,knowledge:2,faith:1}},
+  {id:"finances",label:"Finances",                note:"provision, debt, stewardship",    gifts:{faith:2,wisdom:1,knowledge:1,miracles:1}}
+];
+
+const GIFTS = {
+  wisdom:   {name:"Word of Wisdom"},
+  knowledge:{name:"Word of Knowledge"},
+  faith:    {name:"Gift of Faith"},
+  healing:  {name:"Gifts of Healing"},
+  miracles: {name:"Working of Miracles"},
+  prophecy: {name:"Prophecy"},
+  discern:  {name:"Discernment of Spirits"},
+  tongues:  {name:"Tongues"},
+  interpret:{name:"Interpretation of Tongues"}
+};
+
+/* 15 situational-recall questions */
+const QUESTIONS = [
+  {g:"wisdom",   tag:"Word of Wisdom",  t:"People get stuck, talk it through with you — and the right way forward becomes clear as you speak."},
+  {g:"wisdom",   tag:"Word of Wisdom",  t:"In a tense conflict, you've helped others see a path that honors both the truth and the people involved."},
+  {g:"knowledge",tag:"Word of Knowledge",t:"You've suddenly known something about a person or situation you had no natural way of knowing — and it mattered."},
+  {g:"faith",    tag:"Gift of Faith",   t:"In a hopeless situation you felt a rock-solid certainty God would come through, when everyone else had given up."},
+  {g:"faith",    tag:"Gift of Faith",   t:"You've taken a spiritual risk — stepping out on something you sensed God asked — that others found scary."},
+  {g:"healing",  tag:"Gifts of Healing",t:"You've prayed over someone's sickness, pain, or grief and seen real improvement follow."},
+  {g:"healing",  tag:"Gifts of Healing",t:"You feel a genuine pull to pray with people who are physically or emotionally hurting."},
+  {g:"miracles", tag:"Working of Miracles",t:"You've witnessed something happen after prayer that had no natural explanation."},
+  {g:"prophecy", tag:"Prophecy",        t:"Words have come for you to say to someone — comfort, warning, encouragement — that landed with unexpected power."},
+  {g:"prophecy", tag:"Prophecy",        t:"You've felt moved to encourage a specific person, and later learned they badly needed exactly that, that day."},
+  {g:"discern",  tag:"Discernment of Spirits",t:"You sense when something is spiritually 'off' — a manipulation, a false idea, or a true move of God — before others notice."},
+  {g:"discern",  tag:"Discernment of Spirits",t:"You can often tell whether an inner prompting is from God, from yourself, or from somewhere else."},
+  {g:"tongues",  tag:"Tongues",         t:"In prayer, words or sounds rise up that aren't your own language, and it draws you closer to God."},
+  {g:"interpret",tag:"Interpretation of Tongues",t:"When someone prays or speaks in tongues, a sense of its meaning or message forms in you."},
+  {g:"knowledge",tag:"Word of Knowledge",t:"A specific fact, image, or insight has come to you in prayer that later proved true and helpful to share."}
+];
+
+const SCALE = [
+  {t:"Not really / never",  v:0},
+  {t:"Once or twice",       v:1},
+  {t:"Sometimes",           v:2},
+  {t:"Often — I recognize this", v:3}
+];
+
+/* Doctrine: definition + verse + CCC + saint (softened where attribution is uncertain) */
+const DOCTRINE = {
+  wisdom:{def:"A Spirit-given ability to see a situation as God sees it and speak the right counsel or judgment — beyond mere cleverness.",
+    verse:'“To one is given through the Spirit the utterance of wisdom.” — 1 Cor 12:8',
+    ccc:"§1831 (wisdom perfects charity); charisms §799–801",
+    saint:"St. Thomas Aquinas — theologian whose insight served the whole Church."},
+  knowledge:{def:"A supernatural flash of specific knowledge — a fact, need, or truth revealed by God to help another, not gained by study.",
+    verse:'“…to another the utterance of knowledge according to the same Spirit.” — 1 Cor 12:8',
+    ccc:"§799–801 (charisms for the common good)",
+    saint:"St. Catherine of Siena — read hearts and counseled popes."},
+  faith:{def:"An extraordinary, mountain-moving confidence for a specific moment — surrender that dares to trust God will act.",
+    verse:'“…to another faith by the same Spirit.” — 1 Cor 12:9',
+    ccc:"§153–155 (faith as gift); charisms §2003",
+    saint:"St. Padre Pio — “Pray, hope, and don't worry.”"},
+  healing:{def:"God's gift to be an instrument of restoration — physical, emotional, or spiritual — through prayer. The healing is always God's, never the person's.",
+    verse:'“…to another gifts of healing by the one Spirit.” — 1 Cor 12:9',
+    ccc:"§1508 (the Spirit gives healing to glorify the risen Lord)",
+    saint:"St. Padre Pio & St. Luke (patron of healers)."},
+  miracles:{def:"The working of deeds beyond nature's power — signs that point to God's kingdom breaking in.",
+    verse:'“…to another the working of miracles.” — 1 Cor 12:10',
+    ccc:"§156, §548 (miracles confirm and strengthen faith)",
+    saint:"St. Anthony of Padua — the “Wonder-worker.”"},
+  prophecy:{def:"A Spirit-prompted word that builds up, encourages, or lovingly convicts — always in harmony with Scripture and the Church, never replacing them.",
+    verse:'“…to another prophecy.” — 1 Cor 12:10 · “weigh what is said” — 1 Cor 14:29',
+    ccc:"§2004 (charism of prophecy); §67 (private revelation serves, not surpasses, public revelation)",
+    saint:"St. Hildegard of Bingen — Doctor of the Church, prophetic visionary."},
+  discern:{def:"The ability to distinguish spirits — to tell whether a movement, message, or prompting is from God, from self, or from the evil one.",
+    verse:'“…to another the ability to distinguish between spirits.” — 1 Cor 12:10 · “test everything.” — 1 Thess 5:21',
+    ccc:"§801, §2690 (discernment of spirits)",
+    saint:"St. Ignatius of Loyola — gave the Church its Rules for Discernment."},
+  tongues:{def:"Spirit-given prayer in a language not one's own — most often a form of praise that lifts the heart to God.",
+    verse:'“…to another various kinds of tongues.” — 1 Cor 12:10',
+    ccc:"§2003 (charisms, ordinary and extraordinary)",
+    saint:"St. Vincent Ferrer — preached and was understood across tongues."},
+  interpret:{def:"The companion gift to tongues: God-given understanding of what a tongue means, so the community can be built up.",
+    verse:'“…to another the interpretation of tongues.” — 1 Cor 12:10 · “let one interpret.” — 1 Cor 14:27',
+    ccc:"§2003; ordered to the common good, 1 Cor 12:7",
+    saint:"St. Paul — taught this gift: he urged those who pray in tongues to seek interpretation, so the whole community is built up (1 Cor 14:13). No traditional patron is tied to it."}
+};
+
+/* ---------- STATE ---------- */
+let picked = new Set();
+let answers = new Array(QUESTIONS.length).fill(null);
+let qi = 0;
+
+/* ---------- BUILD MISSIONS ---------- */
+const mc = document.getElementById("missionChips");
+MISSIONS.forEach(m=>{
+  const d=document.createElement("div");
+  d.className="chip"; d.dataset.id=m.id;
+  d.innerHTML=`${m.label}<small>${m.note}</small>`;
+  d.onclick=()=>{ d.classList.toggle("on"); picked.has(m.id)?picked.delete(m.id):picked.add(m.id); };
+  mc.appendChild(d);
+});
+document.getElementById("mNext").onclick=()=>{ show("s-quiz"); renderQ(); };
+
+/* ---------- QUIZ ---------- */
+function renderQ(){
+  const q=QUESTIONS[qi];
+  document.getElementById("qTag").textContent=q.tag;
+  document.getElementById("qScene").textContent=q.t;
+  document.getElementById("count").textContent=`Question ${qi+1} of ${QUESTIONS.length}`;
+  document.getElementById("prog").style.width=((qi)/QUESTIONS.length*100)+"%";
+  const box=document.getElementById("qOpts"); box.innerHTML="";
+  SCALE.forEach(s=>{
+    const o=document.createElement("div");
+    o.className="opt"+(answers[qi]===s.v?" on":"");
+    o.textContent=s.t;
+    o.onclick=()=>{ answers[qi]=s.v; renderQ(); };
+    box.appendChild(o);
+  });
+  document.getElementById("qNext").disabled = answers[qi]===null;
+  document.getElementById("qNext").textContent = qi===QUESTIONS.length-1 ? "See results →" : "Next →";
+  document.getElementById("qBack").style.visibility = qi===0 ? "hidden":"visible";
+}
+document.getElementById("qNext").onclick=()=>{
+  if(answers[qi]===null) return;
+  if(qi<QUESTIONS.length-1){ qi++; renderQ(); }
+  else { document.getElementById("prog").style.width="100%"; buildResults(); show("s-result"); window.scrollTo(0,0);}
+};
+document.getElementById("qBack").onclick=()=>{ if(qi>0){qi--;renderQ();} };
+
+/* ---------- RESULTS ---------- */
+function buildResults(){
+  // GIVEN = summed experience per gift, normalized to its max possible
+  const given={}, count={};
+  Object.keys(GIFTS).forEach(g=>{given[g]=0;count[g]=0;});
+  QUESTIONS.forEach((q,i)=>{ given[q.g]+=answers[i]; count[q.g]++; });
+  const givenPct={};
+  Object.keys(GIFTS).forEach(g=>{ givenPct[g]= count[g]? given[g]/(count[g]*3) : 0; });
+
+  // INVITE = mission need, dampened where a gift is already strongly given
+  const need={};
+  Object.keys(GIFTS).forEach(g=>need[g]=0);
+  MISSIONS.forEach(m=>{ if(picked.has(m.id)) for(const g in m.gifts) need[g]+=m.gifts[g]; });
+  const maxNeed=Math.max(1,...Object.values(need));
+  const invite={};
+  Object.keys(GIFTS).forEach(g=>{
+    const needN = need[g]/maxNeed;                 // 0..1 mission pull
+    invite[g] = needN*0.75 + (1-givenPct[g])*0.25; // pull + room to grow
+    if(picked.size===0) invite[g]=1-givenPct[g];    // no mission picked → pure gap
+  });
+
+  renderRank("rankGiven", givenPct, "given",
+    picked.size===0?null:null);
+  renderRank("rankInvite", invite, "invite");
+  buildDoctrine();
+}
+
+function renderRank(elId, scores, cls){
+  const ol=document.getElementById(elId); ol.innerHTML="";
+  const sorted=Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+  const max=Math.max(...Object.values(scores),0.0001);
+  sorted.forEach((g,idx)=>{
+    const li=document.createElement("li");
+    if(idx===0 && scores[g]>0) li.className="top";
+    const pct=Math.round(scores[g]/max*100);
+    li.innerHTML=`<span class="nm">${idx+1}. ${GIFTS[g].name}</span>
+      <div class="meter"><i style="width:${Math.max(6,pct)}%"></i></div>`;
+    ol.appendChild(li);
+  });
+}
+
+function buildDoctrine(){
+  const wrap=document.getElementById("doctrine"); wrap.innerHTML="";
+  Object.keys(GIFTS).forEach(g=>{
+    const d=DOCTRINE[g];
+    const el=document.createElement("details");
+    el.innerHTML=`<summary>${GIFTS[g].name}</summary>
+      <div class="doc">
+        <p class="def">${d.def}</p>
+        <div class="row verse"><b>Scripture</b><span>${d.verse}</span></div>
+        <div class="row"><b>Catechism</b><span>${d.ccc}</span></div>
+        <div class="row"><b>A saint</b><span>${d.saint}</span></div>
+      </div>`;
+    wrap.appendChild(el);
+  });
+}
+
+/* ---------- NAV ---------- */
+function show(id){
+  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+function restart(){
+  picked=new Set(); answers=new Array(QUESTIONS.length).fill(null); qi=0;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));
+  show("s-mission"); window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
