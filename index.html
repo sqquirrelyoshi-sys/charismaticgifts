@@ -214,8 +214,8 @@
     <b>Now the real work.</b> Take the top gift in each column into 10 minutes of silent prayer this week. Ask the Lord plainly: <i>“Is this from You? What are You asking of me?”</i> Notice the fruit — does it build up love, or self? Bring it to a mentor, spiritual director, or your service team before acting on it.
   </div>
  
-  <button class="save no-print" onclick="window.print()">⬇ Save my results (PDF)</button>
-  <p class="save-hint no-print">Opens your print screen → choose <b>“Save as PDF”</b> to keep or share it.</p>
+  <button class="save no-print" onclick="downloadResults()">⬇ Download my results</button>
+  <p class="save-hint no-print">Saves a single file you can keep, open offline, or share.</p>
  
   <h2>The gifts, defined</h2>
   <p class="sub">Tap any gift for its meaning, Scripture, Catechism, and a saint who lived it.</p>
@@ -320,6 +320,7 @@ const DOCTRINE = {
  
 /* ---------- STATE ---------- */
 let picked = new Set();
+let _given = [], _invite = [];
 let answers = new Array(QUESTIONS.length).fill(null);
 let qi = 0;
  
@@ -385,6 +386,8 @@ function buildResults(){
     picked.size===0?null:null);
   renderRank("rankInvite", invite, "invite");
   buildDoctrine();
+  _given  = Object.keys(givenPct).sort((a,b)=>givenPct[b]-givenPct[a]);
+  _invite = Object.keys(invite).sort((a,b)=>invite[b]-invite[a]);
   document.getElementById("printDate").textContent =
     "Saved for prayer · " + new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
 }
@@ -408,6 +411,7 @@ function buildDoctrine(){
   Object.keys(GIFTS).forEach(g=>{
     const d=DOCTRINE[g];
     const el=document.createElement("details");
+    el.open=true;
     el.innerHTML=`<summary>${GIFTS[g].name}</summary>
       <div class="doc">
         <p class="def">${d.def}</p>
@@ -417,6 +421,77 @@ function buildDoctrine(){
       </div>`;
     wrap.appendChild(el);
   });
+}
+ 
+/* ---------- DOWNLOAD as standalone HTML ---------- */
+function downloadResults(){
+  const date = new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
+  const listHTML = arr => arr.map((g,i)=>`<li><b>${i+1}.</b> ${GIFTS[g].name}</li>`).join("");
+  const doctrineHTML = Object.keys(GIFTS).map(g=>{
+    const d=DOCTRINE[g];
+    return `<section class="gift">
+      <h3>${GIFTS[g].name}</h3>
+      <p class="def">${d.def}</p>
+      <p><span class="lbl">Scripture</span><em>${d.verse}</em></p>
+      <p><span class="lbl">Catechism</span>${d.ccc}</p>
+      <p><span class="lbl">A saint</span>${d.saint}</p>
+    </section>`;
+  }).join("");
+ 
+  const doc = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Charismatic Gifts — for Prayer (${date})</title>
+<style>
+  body{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    color:#2a2420;background:#faf6ee;margin:0;padding:24px 18px 60px}
+  .wrap{max-width:620px;margin:0 auto}
+  h1{font-family:Georgia,serif;font-size:1.5rem;margin:0 0 2px}
+  .date{color:#6b5f52;font-size:.85rem;margin:0 0 18px}
+  .guard{background:#2f3d5c;color:#fdf8ec;border-radius:12px;padding:16px;margin:0 0 20px;font-size:.9rem}
+  .guard b{color:#f3d78a}
+  h2{font-family:Georgia,serif;color:#2f3d5c;font-size:1.15rem;border-bottom:1px solid #e4d9c6;padding-bottom:4px;margin:26px 0 10px}
+  .cols{display:flex;gap:20px;flex-wrap:wrap}
+  .col{flex:1;min-width:220px}
+  .col h3{font-family:Georgia,serif;font-size:1rem;margin:0 0 6px}
+  .given h3{color:#3f6b47}.invite h3{color:#b08123}
+  ol.rank{list-style:none;padding:0;margin:0}
+  ol.rank li{background:#fffdf8;border:1px solid #e4d9c6;border-radius:8px;padding:8px 12px;margin-bottom:6px;font-size:.92rem}
+  .pray{background:#e7ebf3;border-left:4px solid #2f3d5c;border-radius:8px;padding:14px;margin:20px 0;font-size:.92rem}
+  .gift{background:#fffdf8;border:1px solid #e4d9c6;border-radius:10px;padding:14px 16px;margin-bottom:12px}
+  .gift h3{font-family:Georgia,serif;color:#2f3d5c;margin:0 0 6px;font-size:1.05rem}
+  .gift .def{margin:.2em 0 .7em}
+  .gift p{margin:.35em 0;font-size:.9rem}
+  .lbl{display:inline-block;min-width:78px;color:#b08123;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+  .gift em{color:#6b5f52}
+  .foot{font-size:.78rem;color:#6b5f52;text-align:center;margin-top:26px;line-height:1.6}
+</style></head><body><div class="wrap">
+  <h1>My Charismatic Gifts</h1>
+  <p class="date">A prayer starter · ${date}</p>
+  <div class="guard">
+    <b>This is not a verdict.</b> No quiz reveals your gifts. Two questions matter more than any ranking:
+    <b>What has God already given me?</b> and <b>What is God desiring to give me?</b>
+    Real gifts are confirmed in the Church, tested by their fruit, and grown in prayer and discernment — never self-declared.
+    <b>There is no substitute for prayer.</b>
+  </div>
+  <div class="cols">
+    <div class="col given"><h3>Already given?</h3><ol class="rank">${listHTML(_given)}</ol></div>
+    <div class="col invite"><h3>Inviting you?</h3><ol class="rank">${listHTML(_invite)}</ol></div>
+  </div>
+  <div class="pray"><b>Take it to prayer.</b> Bring the top gift in each column into 10 minutes of silence this week.
+    Ask the Lord plainly: “Is this from You? What are You asking of me?” Notice the fruit. Bring it to a mentor or your service team before acting.</div>
+  <h2>The gifts, defined</h2>
+  ${doctrineHTML}
+  <p class="foot">Sources: 1 Cor 12:8–10; Catechism §§799–801, 951, 2003; 1 Thess 5:19–21.<br>
+  A charism is given “for the common good” (1 Cor 12:7), always subject to the Church's discernment.</p>
+</div></body></html>`;
+ 
+  const blob = new Blob([doc], {type:"text/html"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "my-charismatic-gifts-" + new Date().toISOString().slice(0,10) + ".html";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 1500);
 }
  
 /* ---------- NAV ---------- */
