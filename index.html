@@ -23,7 +23,7 @@
   .sub{color:var(--muted);font-size:.95rem;margin-top:0}
   header{text-align:center;padding:26px 0 6px;border-bottom:1px solid var(--line)}
   .cross{color:var(--gold);font-size:1.4rem;letter-spacing:.3em}
-
+ 
   /* Guardrail */
   .guard{
     background:var(--blue);color:#fdf8ec;border-radius:14px;
@@ -34,7 +34,7 @@
   .guard .key{color:#f3d78a;font-weight:600}
   .guard ul{margin:.4em 0 0;padding-left:20px;font-size:.9rem;color:#e0d8c8}
   .guard li{margin:.3em 0}
-
+ 
   /* Steps / progress */
   .step{display:none}
   .step.active{display:block;animation:fade .25s ease}
@@ -42,7 +42,7 @@
   .bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:14px 0 4px}
   .bar > i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s ease}
   .count{font-size:.82rem;color:var(--muted);text-align:right}
-
+ 
   /* Mission chips */
   .chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
   .chip{
@@ -52,7 +52,7 @@
   }
   .chip small{display:block;font-weight:400;color:var(--muted);font-size:.78rem;margin-top:3px}
   .chip.on{border-color:var(--gold);background:var(--gold-soft);color:#7a5813}
-
+ 
   /* Question card */
   .q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;box-shadow:var(--shadow)}
   .q .scene{font-size:1.12rem;line-height:1.5;margin:0 0 4px}
@@ -64,7 +64,7 @@
   }
   .opt:active{transform:scale(.985)}
   .opt.on{border-color:var(--blue);background:var(--blue-soft)}
-
+ 
   .nav{display:flex;gap:10px;margin-top:18px}
   button.btn{
     flex:1;border:none;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;
@@ -73,7 +73,7 @@
   .btn.primary{background:var(--gold);color:#fff}
   .btn.primary:disabled{background:#d8cbb0;cursor:not-allowed}
   .btn.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);flex:0 0 90px}
-
+ 
   /* Results */
   .cols{display:flex;gap:14px;margin:16px 0}
   .col{flex:1;min-width:0}
@@ -92,7 +92,7 @@
   .given .meter > i{background:var(--green)}
   .invite .meter > i{background:var(--gold)}
   .rank li.top{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold-soft)}
-
+ 
   /* Doctrine accordion */
   details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
   details summary{padding:14px 16px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center;font-family:Georgia,serif}
@@ -105,22 +105,55 @@
   .doc .row b{flex:0 0 62px;color:var(--gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
   .doc .row span{flex:1;color:var(--ink)}
   .doc .row.verse span{font-style:italic;color:var(--muted)}
-
+ 
   .pray{background:var(--blue-soft);border-left:4px solid var(--blue);border-radius:10px;padding:16px;margin:22px 0;font-size:.95rem}
   .pray b{color:var(--blue)}
   .footnote{font-size:.78rem;color:var(--muted);text-align:center;margin:30px 0 0;line-height:1.6}
   .restart{display:block;margin:18px auto 0;background:none;border:none;color:var(--gold);font-weight:600;cursor:pointer;font-size:.9rem;text-decoration:underline}
+ 
+  /* Save / print results */
+  .save{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:18px 0 4px;
+    background:var(--blue);color:#fdf8ec;border:none;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+  .save-hint{text-align:center;font-size:.78rem;color:var(--muted);margin:2px 0 10px}
+  .print-only{display:none}
+ 
+  /* ---- PRINT: clean prayer card, all gifts expanded ---- */
+  @media print{
+    @page{margin:14mm}
+    body{background:#fff;color:#000;padding:0}
+    .wrap{max-width:100%;padding:0}
+    .no-print,.nav,.bar,.count,.save,.save-hint,.restart,
+    #s-mission,#s-quiz,.cross{display:none !important}
+    header{border:none;padding:0 0 6px;text-align:left}
+    h1{font-size:1.4rem;margin:0}
+    .step.active{display:block}
+    .guard{background:#fff;color:#000;border:1px solid #999;box-shadow:none;border-radius:8px;padding:12px}
+    .guard h3,.guard .key{color:#000}
+    .guard p,.guard li{color:#222}
+    .print-only{display:block;font-size:.8rem;color:#555;margin:2px 0 10px}
+    .cols{gap:18px}
+    .col .lede{min-height:0}
+    .rank li{break-inside:avoid;box-shadow:none}
+    .rank li.top{box-shadow:none;border:1.5px solid #000}
+    .meter{display:none}
+    .pray{background:#f3f3f3;border-left:3px solid #000;color:#000}
+    details{break-inside:avoid;border:1px solid #bbb}
+    details .doc{display:block !important}
+    details summary::after{content:"" !important}
+    details summary{cursor:default}
+    .footnote{color:#333}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-
+ 
 <header>
   <div class="cross">✝</div>
   <h1>The Nine Charismatic Gifts</h1>
   <p class="sub">A prayer starter, not a verdict &nbsp;·&nbsp; 1 Corinthians 12:8–10</p>
 </header>
-
+ 
 <!-- GUARDRAIL: always visible -->
 <div class="guard">
   <h3>✋ Read this first</h3>
@@ -132,7 +165,7 @@
   </ul>
   <p style="margin-bottom:0"><b class="key">There is no substitute for prayer.</b> Real gifts are confirmed in the Church, tested by their fruit, and grown in deeper prayer and discernment — never self-declared. Bring your results to God, and to those who guide your formation.</p>
 </div>
-
+ 
 <!-- STEP 1: MISSIONS -->
 <section class="step active" id="s-mission">
   <h2>1 · Where is your life right now?</h2>
@@ -142,7 +175,7 @@
     <button class="btn primary" id="mNext">Begin the questions →</button>
   </div>
 </section>
-
+ 
 <!-- STEP 2: QUESTIONS -->
 <section class="step" id="s-quiz">
   <div class="bar"><i id="prog"></i></div>
@@ -157,12 +190,13 @@
     <button class="btn primary" id="qNext" disabled>Next →</button>
   </div>
 </section>
-
+ 
 <!-- STEP 3: RESULTS -->
 <section class="step" id="s-result">
   <h2>Two columns, one prayer</h2>
+  <p class="print-only" id="printDate"></p>
   <p class="sub">Ordered gently, high to low. These are <b>doors to explore</b>, not labels to wear.</p>
-
+ 
   <div class="cols">
     <div class="col given">
       <h3>Already given?</h3>
@@ -175,15 +209,18 @@
       <ol class="rank" id="rankInvite"></ol>
     </div>
   </div>
-
+ 
   <div class="pray">
     <b>Now the real work.</b> Take the top gift in each column into 10 minutes of silent prayer this week. Ask the Lord plainly: <i>“Is this from You? What are You asking of me?”</i> Notice the fruit — does it build up love, or self? Bring it to a mentor, spiritual director, or your service team before acting on it.
   </div>
-
+ 
+  <button class="save no-print" onclick="window.print()">⬇ Save my results (PDF)</button>
+  <p class="save-hint no-print">Opens your print screen → choose <b>“Save as PDF”</b> to keep or share it.</p>
+ 
   <h2>The gifts, defined</h2>
   <p class="sub">Tap any gift for its meaning, Scripture, Catechism, and a saint who lived it.</p>
   <div id="doctrine"></div>
-
+ 
   <p class="footnote">
     Sources: 1 Cor 12:8–10; Catechism of the Catholic Church §§799–801, 951, 2003;
     1 Thess 5:19–21. &nbsp;A charism is given <i>“for the common good”</i> (1 Cor 12:7),
@@ -191,9 +228,9 @@
   </p>
   <button class="restart" onclick="restart()">↺ Start over</button>
 </section>
-
+ 
 </div>
-
+ 
 <script>
 /* ---------- DATA ---------- */
 const MISSIONS = [
@@ -202,7 +239,7 @@ const MISSIONS = [
   {id:"studies", label:"Studies & work",          note:"school, career, calling",         gifts:{wisdom:2,knowledge:2,faith:1}},
   {id:"finances",label:"Finances",                note:"provision, debt, stewardship",    gifts:{faith:2,wisdom:1,knowledge:1,miracles:1}}
 ];
-
+ 
 const GIFTS = {
   wisdom:   {name:"Word of Wisdom"},
   knowledge:{name:"Word of Knowledge"},
@@ -214,7 +251,7 @@ const GIFTS = {
   tongues:  {name:"Tongues"},
   interpret:{name:"Interpretation of Tongues"}
 };
-
+ 
 /* 15 situational-recall questions */
 const QUESTIONS = [
   {g:"wisdom",   tag:"Word of Wisdom",  t:"People get stuck, talk it through with you — and the right way forward becomes clear as you speak."},
@@ -233,14 +270,14 @@ const QUESTIONS = [
   {g:"interpret",tag:"Interpretation of Tongues",t:"When someone prays or speaks in tongues, a sense of its meaning or message forms in you."},
   {g:"knowledge",tag:"Word of Knowledge",t:"A specific fact, image, or insight has come to you in prayer that later proved true and helpful to share."}
 ];
-
+ 
 const SCALE = [
   {t:"Not really / never",  v:0},
   {t:"Once or twice",       v:1},
   {t:"Sometimes",           v:2},
   {t:"Often — I recognize this", v:3}
 ];
-
+ 
 /* Doctrine: definition + verse + CCC + saint (softened where attribution is uncertain) */
 const DOCTRINE = {
   wisdom:{def:"A Spirit-given ability to see a situation as God sees it and speak the right counsel or judgment — beyond mere cleverness.",
@@ -280,12 +317,12 @@ const DOCTRINE = {
     ccc:"§2003; ordered to the common good, 1 Cor 12:7",
     saint:"St. Paul — taught this gift: he urged those who pray in tongues to seek interpretation, so the whole community is built up (1 Cor 14:13). No traditional patron is tied to it."}
 };
-
+ 
 /* ---------- STATE ---------- */
 let picked = new Set();
 let answers = new Array(QUESTIONS.length).fill(null);
 let qi = 0;
-
+ 
 /* ---------- BUILD MISSIONS ---------- */
 const mc = document.getElementById("missionChips");
 MISSIONS.forEach(m=>{
@@ -296,7 +333,7 @@ MISSIONS.forEach(m=>{
   mc.appendChild(d);
 });
 document.getElementById("mNext").onclick=()=>{ show("s-quiz"); renderQ(); };
-
+ 
 /* ---------- QUIZ ---------- */
 function renderQ(){
   const q=QUESTIONS[qi];
@@ -322,7 +359,7 @@ document.getElementById("qNext").onclick=()=>{
   else { document.getElementById("prog").style.width="100%"; buildResults(); show("s-result"); window.scrollTo(0,0);}
 };
 document.getElementById("qBack").onclick=()=>{ if(qi>0){qi--;renderQ();} };
-
+ 
 /* ---------- RESULTS ---------- */
 function buildResults(){
   // GIVEN = summed experience per gift, normalized to its max possible
@@ -331,7 +368,7 @@ function buildResults(){
   QUESTIONS.forEach((q,i)=>{ given[q.g]+=answers[i]; count[q.g]++; });
   const givenPct={};
   Object.keys(GIFTS).forEach(g=>{ givenPct[g]= count[g]? given[g]/(count[g]*3) : 0; });
-
+ 
   // INVITE = mission need, dampened where a gift is already strongly given
   const need={};
   Object.keys(GIFTS).forEach(g=>need[g]=0);
@@ -343,13 +380,15 @@ function buildResults(){
     invite[g] = needN*0.75 + (1-givenPct[g])*0.25; // pull + room to grow
     if(picked.size===0) invite[g]=1-givenPct[g];    // no mission picked → pure gap
   });
-
+ 
   renderRank("rankGiven", givenPct, "given",
     picked.size===0?null:null);
   renderRank("rankInvite", invite, "invite");
   buildDoctrine();
+  document.getElementById("printDate").textContent =
+    "Saved for prayer · " + new Date().toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'});
 }
-
+ 
 function renderRank(elId, scores, cls){
   const ol=document.getElementById(elId); ol.innerHTML="";
   const sorted=Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
@@ -363,7 +402,7 @@ function renderRank(elId, scores, cls){
     ol.appendChild(li);
   });
 }
-
+ 
 function buildDoctrine(){
   const wrap=document.getElementById("doctrine"); wrap.innerHTML="";
   Object.keys(GIFTS).forEach(g=>{
@@ -379,7 +418,7 @@ function buildDoctrine(){
     wrap.appendChild(el);
   });
 }
-
+ 
 /* ---------- NAV ---------- */
 function show(id){
   document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
